@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <style>
+      .title { font: 700 22px Inter, Arial, sans-serif; fill: #0b1f33; }
+      .h2 { font: 700 18px Inter, Arial, sans-serif; fill: #0b1f33; }
+      .txt { font: 400 14px Inter, Arial, sans-serif; fill: #102a43; }
+      .small { font: 400 12px Inter, Arial, sans-serif; fill: #102a43; }
+      .muted { fill: #6b7c93; }
+      .box { fill: #ffffff; stroke: #2b6cb0; stroke-width: 2; rx: 14; ry: 14; }
+      .box2 { fill: #ffffff; stroke: #4a5568; stroke-width: 2; rx: 14; ry: 14; }
+      .dash { fill: #ffffff; stroke: #4a5568; stroke-width: 2; stroke-dasharray: 8 6; rx: 18; ry: 18; }
+      .pill { fill: #e6f0ff; stroke: #2b6cb0; stroke-width: 2; rx: 18; ry: 18; }
+      .arrow { stroke: #1a365d; stroke-width: 3; fill: none; marker-end: url(#arrowHead); }
+      .arrowThin { stroke: #1a365d; stroke-width: 2; fill: none; marker-end: url(#arrowHeadThin); }
+      .note { fill: #f7fafc; stroke: #cbd5e0; stroke-width: 2; rx: 12; ry: 12; }
+      .badge { fill: #edf2f7; stroke: #a0aec0; stroke-width: 1.5; rx: 10; ry: 10; }
+      .deny { fill: #fff5f5; stroke: #e53e3e; }
+      .allow { fill: #f0fff4; stroke: #38a169; }
+    </style>
+
+    <marker id="arrowHead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#1a365d"/>
+    </marker>
+    <marker id="arrowHeadThin" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#1a365d"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect x="0" y="0" width="1600" height="900" fill="#fbfdff"/>
+
+  <!-- Left: Clients -->
+  <rect class="box2" x="60" y="310" width="220" height="220"/>
+  <text class="h2" x="90" y="350">Clients</text>
+  <text class="txt" x="90" y="390">• User</text>
+  <text class="txt" x="90" y="420">• Service</text>
+  <text class="small muted" x="90" y="470">Call with Entra JWT</text>
+
+  <!-- Top: APIM -->
+  <rect class="box" x="590" y="70" width="420" height="120"/>
+  <text class="h2" x="630" y="115">API Management (APIM)</text>
+  <text class="txt" x="630" y="150">Validate Entra JWT</text>
+
+  <!-- Center: App/Agent -->
+  <rect class="box" x="560" y="250" width="480" height="160"/>
+  <text class="h2" x="600" y="295">App / Agent</text>
+  <text class="txt" x="600" y="330">Managed Identity (workload identity)</text>
+  <text class="small muted" x="600" y="360">Short-lived tokens • No long-lived secrets</text>
+
+  <!-- Arrow: Clients -> App -->
+  <path class="arrow" d="M280 420 C380 420, 440 360, 560 330"/>
+  <text class="small muted" x="320" y="395">Entra JWT</text>
+
+  <!-- Arrow: APIM -> App -->
+  <path class="arrow" d="M800 190 L800 250"/>
+  <text class="small muted" x="820" y="225">validated</text>
+
+  <!-- Policy Callouts (top-left bullets) -->
+  <rect class="note" x="60" y="60" width="460" height="210"/>
+  <text class="h2" x="90" y="100">Identity & Access Principles</text>
+  <text class="txt" x="90" y="135">• Unique workload identity per agent (or class)</text>
+  <text class="txt" x="90" y="160">• Least privilege (RG / resource / container / index)</text>
+  <text class="txt" x="90" y="185">• Short-lived tokens only (no long-lived secrets)</text>
+  <text class="txt" x="90" y="210">• Environment separation (dev/prod separate)</text>
+  <text class="txt" x="90" y="235">• Defense in depth (APIM + app checks + RBAC)</text>
+
+  <!-- Environment Separation Container -->
+  <rect class="dash" x="340" y="450" width="920" height="280"/>
+  <text class="h2" x="380" y="490">Environment Separation</text>
+
+  <!-- Dev identity -->
+  <rect class="box2" x="380" y="520" width="380" height="170"/>
+  <text class="h2" x="410" y="555">Dev Agent Identity</text>
+  <text class="txt" x="410" y="590">• Principal ID (dev)</text>
+  <text class="txt" x="410" y="620">• Scoped roles (least privilege)</text>
+  <rect class="badge" x="410" y="640" width="250" height="32"/>
+  <text class="small" x="425" y="662">Scope: RG/Resource/Container/Index</text>
+
+  <!-- Prod identity -->
+  <rect class="box2" x="820" y="520" width="400" height="170"/>
+  <text class="h2" x="850" y="555">Prod Agent Identity</text>
+  <text class="txt" x="850" y="590">• Principal ID (prod)</text>
+  <text class="txt" x="850" y="620">• Scoped roles (least privilege)</text>
+  <rect class="badge" x="850" y="640" width="260" height="32"/>
+  <text class="small" x="865" y="662">Scope: RG/Resource/Container/Index</text>
+
+  <!-- RBAC resources container -->
+  <rect class="dash" x="420" y="710" width="760" height="150"/>
+  <text class="h2" x="450" y="745">Downstream Resources (RBAC enforced)</text>
+
+  <!-- Resources -->
+  <rect class="pill" x="450" y="765" width="190" height="70"/>
+  <text class="txt" x="485" y="805">Key Vault</text>
+
+  <rect class="pill" x="700" y="765" width="210" height="70"/>
+  <text class="txt" x="730" y="805">Storage</text>
+  <text class="small muted" x="730" y="828">Blob / Table</text>
+
+  <rect class="pill" x="960" y="765" width="190" height="70"/>
+  <text class="txt" x="1010" y="805">Search</text>
+  <text class="small muted" x="995" y="828">Index scoped</text>
+
+  <!-- Arrow: App -> Dev/Prod -->
+  <path class="arrowThin" d="M720 410 C650 440, 560 470, 540 520"/>
+  <path class="arrowThin" d="M880 410 C950 440, 1040 470, 1040 520"/>
+  <text class="small muted" x="760" y="455">token request via MI</text>
+
+  <!-- Arrow: Dev -> Resources -->
+  <path class="arrowThin" d="M570 690 L570 710"/>
+  <!-- Arrow: Prod -> Resources -->
+  <path class="arrowThin" d="M1020 690 L1020 710"/>
+
+  <!-- Defense in Depth callout -->
+  <rect class="note" x="60" y="560" width="250" height="170"/>
+  <text class="h2" x="85" y="600">Defense in Depth</text>
+  <text class="txt" x="85" y="635">• APIM validation</text>
+  <text class="txt" x="85" y="660">• App policy checks</text>
+  <text class="txt" x="85" y="685">• Downstream RBAC</text>
+
+  <!-- Logs / Audit -->
+  <rect class="box" x="1280" y="300" width="280" height="360"/>
+  <text class="h2" x="1310" y="340">Audit Logs</text>
+  <text class="txt" x="1310" y="375">Every call records:</text>
+  <text class="txt" x="1310" y="405">• agent_id</text>
+  <text class="txt" x="1310" y="430">• principal_id</text>
+  <text class="txt" x="1310" y="455">• tool</text>
+  <text class="txt" x="1310" y="480">• resource</text>
+  <text class="txt" x="1310" y="505">• decision (allow/deny)</text>
+  <text class="txt" x="1310" y="530">• correlation_id</text>
+
+  <!-- Example log rows -->
+  <rect class="allow" x="1310" y="560" width="240" height="34" rx="10" ry="10"/>
+  <text class="small" x="1325" y="582">Allow • Blob read • corr=…</text>
+  <rect class="deny" x="1310" y="602" width="240" height="34" rx="10" ry="10"/>
+  <text class="small" x="1325" y="624">Deny • Search write • corr=…</text>
+
+  <!-- Arrow: App -> Logs -->
+  <path class="arrow" d="M1040 310 C1160 310, 1180 340, 1280 360"/>
+  <text class="small muted" x="1110" y="295">log each decision</text>
+
+  <!-- Bottom banner -->
+  <rect class="box" x="470" y="860" width="660" height="34" rx="16" ry="16"/>
+  <text class="txt" x="515" y="883">Auditable, scoped, short-lived access — per environment and per agent identity</text>
+</svg>
