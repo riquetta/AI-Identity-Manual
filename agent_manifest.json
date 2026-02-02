@@ -1,0 +1,19 @@
+Agent manifest JSON example
+{
+  "agent_id": "ask-agenttest",
+  "name": "Ask Agent",
+  "description": "Answers user questions via Azure OpenAI.",
+  "capabilities": ["qna"],
+  "owner": "applied-ai-platform",
+  "runtime": {
+    "type": "azure-functions",
+    "route": "/api/ask",
+    "health_route": "/api/health"
+  },
+  "version": "1.0.0",
+  "env": "DEV",
+  "auth": {
+    "type": "oauth2",
+    "audience": "api://agent-registry"
+  }
+}
