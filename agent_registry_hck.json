@@ -1,0 +1,25 @@
+{
+  "agents": {
+    "AGENT-1": {
+      "appid": "AGENT-1",
+      "name": "Code Agent",
+      "description": "Generates code snippets based on user prompts.",
+      "roles": "agent.chat.invoke",
+      "capabilities": [
+        "chat-interaction"
+      ],
+      "owner": "applied-ai-platform",
+      "runtime": {
+        "type": "azure-functions",
+        "route": "/api/code",
+        "health_route": "/api/health"
+      },
+      "version": "1.0.0",
+      "env": "DEV",
+      "auth": {
+        "type": "oauth2",
+        "audience": "api://agent-registry"
+      }
+    }
+  }
+}
