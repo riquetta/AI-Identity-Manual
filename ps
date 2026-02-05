@@ -1,0 +1,54 @@
+param(
+  [string]$BaseUrl = "http://localhost:7071",
+  [string]$JsonPath = ".\registry.json",
+  [string]$AdminKey = "dev-admin-key"
+)
+
+$headers = @{ "x-admin-key" = $AdminKey }
+
+# Read source JSON
+$raw = Get-Content $JsonPath -Raw | ConvertFrom-Json
+$r = $raw.registry_agent
+
+if (-not $r) { throw "Missing root 'registry_agent' in JSON." }
+if (-not $r.agents) { throw "Missing 'registry_agent.agents' array in JSON." }
+
+foreach ($a in $r.agents) {
+  # Choose ID strategy: one doc per version
+  $baseId = [string]$r.agent_id
+  $ver = [string]$a.version
+  $agentId = if ($ver) { "$baseId`:$ver" } else { $baseId }
+
+  # Map roles from your schema (customize as needed)
+  $roles = @()
+  if ($a.persona -and $a.persona.role) { $roles += [string]$a.persona.role }
+
+  # Build payload expected by /registry/register
+  $payloadObj = @{
+    agent_id = $agentId
+    appid    = $agentId
+    name     = [string]$r.name
+    enabled  = $true
+    test     = [string]$a.lifecycle_state
+    roles    = $roles
+    metadata = @{
+      registry_version = $r.registry_version
+      description      = $r.description
+      owner            = $a.owner
+      identity         = $a.identity
+      persona          = $a.persona
+      version          = $a.version
+    }
+  }
+
+  $payloadJson = $payloadObj | ConvertTo-Json -Depth 50
+
+  Write-Host "Registering $agentId ..."
+  Invoke-RestMethod -Method Post `
+    -Uri "$BaseUrl/api/registry/register" `
+    -Headers $headers `
+    -ContentType "application/json" `
+    -Body $payloadJson | Out-Null
+}
+
+Write-Host "Done."
